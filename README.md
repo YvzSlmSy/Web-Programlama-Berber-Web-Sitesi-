@@ -1,7 +1,7 @@
 # Kuaför Yönetim Sistemi
 
 ## Proje Açıklaması
-Bu proje, kuaför ve berber salonları için bir işletme yönetim uygulamasıdır. ASP.NET Core MVC kullanılarak geliştirilmiş olup, randevu yönetimi, çalışan uygunluk durumu ve hizmet detaylarının görüntülenmesi gibi özellikler sunmaktadır.
+Bu proje, berberler için bir işletme yönetim uygulamasıdır. ASP.NET Core MVC kullanılarak geliştirilmiş olup, randevu yönetimi, çalışan uygunluk durumu ve hizmet detaylarının görüntülenmesi gibi özellikler sunmaktadır.
 
 Ayrıca, yapay zeka desteğiyle kullanıcılar saç modeli veya renk önerisi alabilirler.
 
