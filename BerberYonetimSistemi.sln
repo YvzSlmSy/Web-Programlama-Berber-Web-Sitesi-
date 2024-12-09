@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33627.172
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BerberYonetimSistemi", "BerberYonetimSistemi.csproj", "{910785D1-99EA-470D-A8C3-02878EDAA2AE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{910785D1-99EA-470D-A8C3-02878EDAA2AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{910785D1-99EA-470D-A8C3-02878EDAA2AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{910785D1-99EA-470D-A8C3-02878EDAA2AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{910785D1-99EA-470D-A8C3-02878EDAA2AE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {48AA5ABA-580B-4806-9802-F7AE5EEA8AFD}
+	EndGlobalSection
+EndGlobal
