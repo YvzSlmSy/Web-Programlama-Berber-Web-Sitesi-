@@ -1,0 +1,31 @@
+﻿@model BerberYonetimSistemi.Models.Kullanici
+@{
+    ViewData["Title"] = "Kaydol";
+}
+
+<h2>Kaydol</h2>
+
+<div class="form-group">
+    <form asp-action="Register" method="post">
+        <label for="kullaniciAdi">Kullanıcı Adı</label>
+        <input type="text" name="KullaniciAdi" class="form-control" required />
+
+        <label for="kullaniciSoyadi">Soyad</label>
+        <input type="text" name="KullaniciSoyadi" class="form-control" required />
+
+        <label for="kullaniciTelefon">Telefon</label>
+        <input type="text" name="KullaniciTelefon" class="form-control" required />
+
+        <label for="kullaniciSifre">Şifre</label>
+        <input type="password" name="KullaniciSifre" class="form-control" required />
+
+        <label for="kullaniciSifreTekrar">Şifre Tekrarı</label>
+        <input type="password" name="KullaniciSifreTekrar" class="form-control" required />
+
+        <button type="submit" class="btn btn-primary mt-3">Kaydol</button>
+    </form>
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <p class="text-danger">@ViewBag.ErrorMessage</p>
+    }
+</div>

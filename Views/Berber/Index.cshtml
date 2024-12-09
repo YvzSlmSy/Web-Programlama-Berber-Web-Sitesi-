@@ -1,0 +1,21 @@
+﻿@model List<BerberYonetimSistemi.Models.Berber>
+
+<h2>Berber Listesi</h2>
+<a href="/Berber/Create" class="btn btn-primary">Yeni Berber Ekle</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Ad</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var berber in Model)
+        {
+            <tr>
+                <td>@berber.BerberId</td>
+                <td>@berber.BerberAdi</td>
+            </tr>
+        }
+    </tbody>
+</table>

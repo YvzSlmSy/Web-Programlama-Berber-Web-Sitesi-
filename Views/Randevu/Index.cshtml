@@ -1,0 +1,67 @@
+﻿@model BerberYonetimSistemi.Models.RandevuViewModel
+
+<h2>Randevu Al</h2>
+
+<form method="post" asp-action="RandevuAl">
+    <div>
+        <label for="BerberId">Berber Seçin</label>
+        <select id="BerberId" name="BerberId" onchange="updateCalisanlar()" required>
+            <option value="">Seçiniz...</option>
+            @foreach (var berber in Model.Berberler)
+            {
+                <option value="@berber.BerberId">@berber.BerberAdi</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <label for="CalisanId">Çalışan Seçin</label>
+        <select id="CalisanId" name="CalisanId" required>
+            <option value="">Önce berber seçin</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="RandevuTarih">Randevu Tarihi</label>
+        <input type="date" id="RandevuTarih" name="RandevuTarih" required />
+    </div>
+
+    <div>
+        <label for="RandevuSaati">Randevu Saati</label>
+        <input type="time" id="RandevuSaati" name="RandevuSaati" required />
+    </div>
+
+    <button type="submit">Randevu Al</button>
+</form>
+
+<script>
+    function updateCalisanlar() {
+        const berberId = document.getElementById("BerberId").value;
+        const calisanSelect = document.getElementById("CalisanId");
+
+        // Tüm çalışanları temizle
+        calisanSelect.innerHTML = '<option value="">Seçiniz...</option>';
+
+        // Berber seçilmediyse dur
+        if (!berberId) return;
+
+        // Çalışanları filtrele
+        const calisanlar = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Berberler));
+        const selectedBerber = calisanlar.find(b => b.BerberId == berberId);
+        if (selectedBerber) {
+            selectedBerber.Calisanlar.forEach(calisan => {
+                const option = document.createElement("option");
+                option.value = calisan.CalisanId;
+                option.textContent = calisan.CalisanAdi;
+                calisanSelect.appendChild(option);
+            });
+        }
+    }
+</script>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}

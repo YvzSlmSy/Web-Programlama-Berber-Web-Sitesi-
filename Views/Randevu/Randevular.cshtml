@@ -1,0 +1,30 @@
+﻿@model IEnumerable<BerberYonetimSistemi.Models.Randevu>
+
+<h2>Randevular</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Berber</th>
+            <th>Çalışan</th>
+            <th>Tarih</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var randevu in Model)
+        {
+            <tr>
+                <td>@randevu.Berber?.BerberAdi</td>
+                <td>@randevu.Calisan?.CalisanAdi</td>
+                <td>@randevu.RandevuTarih.ToString("yyyy-MM-dd HH:mm")</td>
+            </tr>
+        }
+    </tbody>
+</table>

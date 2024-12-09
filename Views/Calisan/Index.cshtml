@@ -1,0 +1,27 @@
+﻿@model List<BerberYonetimSistemi.Models.Calisan>
+
+
+<h2>Çalışanlar</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Adı</th>
+            <th>Soyadı</th>
+            <th>Telefon</th>
+            <th>Berber</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var calisan in Model)
+        {
+            <tr>
+                <td>@calisan.CalisanAdi</td>
+                <td>@calisan.CalisanSoyadi</td>
+                <td>@calisan.CalisanTelefon</td>
+                <td>@calisan.Berber.BerberAdi</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

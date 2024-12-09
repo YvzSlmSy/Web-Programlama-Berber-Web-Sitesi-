@@ -1,0 +1,25 @@
+﻿@model BerberYonetimSistemi.Models.Kullanici
+@{
+    ViewData["Title"] = "Giriş Yap";
+}
+
+<h2>Giriş Yap</h2>
+
+<div class="form-group">
+    <form asp-action="Login" method="post">
+        <label for="kullaniciAdi">Kullanıcı Adı</label>
+        <input type="text" name="kullaniciAdi" class="form-control" required />
+
+        <label for="sifre">Şifre</label>
+        <input type="password" name="KullaniciSifre" class="form-control" required />
+
+        <button type="submit" class="btn btn-primary mt-3">Giriş Yap</button>
+        <h4>VEYA</h4>
+        <a href="@Url.Action("Register", "Kullanici")" class="btn btn-secondary mt-3">Kaydol</a> <!-- Kaydol Butonu -->
+
+    </form>
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <p class="text-danger">@ViewBag.ErrorMessage</p>
+    }
+</div>

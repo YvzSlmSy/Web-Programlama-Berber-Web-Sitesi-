@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+
+
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BerberYonetimSistemi</title>
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BerberYonetimSistemi.styles.css" asp-append-version="true" />
+
+    <!-- Google Fonts (Yazı tipi değişimi) -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* Navbar Rengini Kahverengiye Ayarlama */
+        .navbar-custom {
+            background-color: #495057; /* Kahverengi renk kodu */
+        }
+
+        .navbar {
+            text-align: center;
+            display: flex;
+            flex-wrap: wrap; /* İçerik taşarsa alt satıra geç */
+            justify-content: space-between; /* Öğeler arasındaki boşlukları düzenle */
+        }
+
+
+       
+
+        .navbar-brand {
+            text-align: center;
+            display: flex;
+            align-items: center; /* Logo ve metni aynı hizada tutar */
+            background-color: rgba(255, 255, 255, 0.5); /* Yarı saydam beyaz arka plan */
+            padding: 10px 20px;
+            border-radius: 5px; /* Köşeleri yuvarlatma */
+        }
+
+            .navbar-brand img {
+                border-radius: 5px; /* Köşeleri yuvarlatma */
+                height: 40px;
+                margin-right: 10px;
+                border-radius: 10%; /* Oval yapma */
+                height: 40px;
+                margin-right: 15px; /* Logo ile yazı arasına mesafe */
+            }
+
+       
+        /* Navbar Yazı Rengini Beyaz Yapma ve Aralarındaki Mesafeyi Arttırma */
+        .navbar-nav .nav-link {
+            text-align: center;
+            color: black !important; /* Yazıyı beyaz yapma */
+            font-family: 'Roboto', sans-serif !important; /* Yazı tipi değişikliği */
+            font-weight: 500;
+            transition: color 0.3s ease, transform 0.3s ease;
+            margin-right: 15px; /* Menü öğeleri arasındaki mesafeyi arttırma */
+            flex-shrink: 1; /* Öğelerin küçülmesine izin verir */
+            text-overflow: ellipsis; /* Gerekirse metni kısaltır */
+            overflow: hidden; /* Taşan kısmı gizler */
+            white-space: nowrap; /* Metnin satır atlamasını engeller */
+        }
+
+            /* Navbar üzerine gelindiğinde renk ve büyüme efekti */
+            .navbar-nav .nav-link:hover {
+                color: white !important; /* Hoverda yazı rengini beyaz yapma */
+                transform: scale(1.1); /* Hoverda yazıyı büyütme */
+            }
+
+
+        .custom-btn {
+            color: black !important; /* Yazı rengini beyaz yapar */
+            border: 1px solid black; /* Çerçeveyi siyah yapar */
+        }
+
+            .custom-btn:hover {
+                background-color: white !important; /* Hover durumunda gri yapar */
+                color: black !important;
+                transform: scale(1.1); /* Hoverda yazıyı büyütme */
+            }
+
+        .hero-section {
+            background: url('https://via.placeholder.com/1920x500') center/cover no-repeat;
+            color: white !important;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+            .hero-section h1 {
+                font-size: 3rem;
+                font-weight: bold;
+            }
+
+            .hero-section p {
+                font-size: 1.2rem;
+                margin-top: 20px;
+            }
+
+        
+
+     
+    </style>
+</head>
+<body>
+
+    <!-- Üst Navbar -->
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-light navbar-custom border-bottom shadow-sm">
+            <div class="container-fluid">
+                <!-- Logo ve Proje Adı -->
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/depositphotos_201500286-stock-illustration-barber-shop-logo-simple-style.jpg" alt="Logo"> Berber Sokağı
+                </a>
+
+                <!-- Hamburger Menü -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Menü Linkleri -->
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Anasayfa</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Hakkımızda</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Randevu/Randevular">Randevularım</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Berber/Index">Berber Yönetimi</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Calisan/Index">Çalışan Yönetimi</a>
+                        </li>
+                        @if (ViewData["IsAdmin"]?.ToString() == "true")
+                        {
+                            <a href="@Url.Action("ManageBarbers", "Admin")">Berber Yönetimi</a>
+                            <a href="@Url.Action("ManageUsers", "Admin")">Kullanıcı Yönetimi</a>
+                        }
+
+
+                        <li class="nav-item">
+                            <a class="btn custom-btn ms-2" href="/Kullanici/Login">
+                                <i class="fas fa-user"></i> Giriş Yap / Kaydol
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Ana İçerik -->
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Script Dosyaları -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

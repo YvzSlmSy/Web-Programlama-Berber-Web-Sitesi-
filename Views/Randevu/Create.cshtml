@@ -1,0 +1,51 @@
+﻿@model BerberYonetimSistemi.Models.Randevu
+
+<h2>Randevu Ekle</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="BerberId">Berber</label>
+        <select asp-for="BerberId" class="form-control" id="berberDropdown" onchange="loadCalisanlar()">
+            <option value="">Berber Seçiniz</option>
+            @foreach (var berber in (SelectList)ViewBag.Berberler)
+            {
+                <option value="@berber.Value">@berber.Text</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="CalisanId">Çalışan</label>
+        <select asp-for="CalisanId" class="form-control" id="calisanDropdown">
+            <option value="">Çalışan Seçiniz</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="Tarih">Randevu Tarihi</label>
+        <input asp-for="RandevuTarih" type="datetime-local" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Randevu Ekle</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#berberDropdown').change(function () {
+            var berberId = $(this).val();
+            if (berberId === "") {
+                $('#calisanDropdown').html('<option value="">Önce bir berber seçin</option>');
+                return;
+            }
+
+            $.getJSON('/Randevu/GetCalisanlarByBerber', { berberId: berberId }, function (data) {
+                var options = '<option value="">Çalışan Seçiniz</option>';
+                $.each(data, function (index, calisan) {
+                    options += `<option value="${calisan.calisanId}">${calisan.calisanAdi} ${calisan.calisanSoyadi}</option>`;
+                });
+                $('#calisanDropdown').html(options);
+            });
+        });
+    });
+</script>

@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Berber Listesi</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Berber Adı</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var berber in Model)
+        {
+            <tr>
+                <td>@berber.BerberAdi</td>
+                <td>
+                    <form asp-action="DeleteBerber" asp-route-id="@berber.BerberId" method="post">
+                        <button class="btn btn-danger" type="submit">Sil</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

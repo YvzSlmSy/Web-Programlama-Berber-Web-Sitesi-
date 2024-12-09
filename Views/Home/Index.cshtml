@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berber Smart</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Özel Stil -->
+    <style>
+        
+        body {
+            background: url('/images/arkaplanresmi.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0; /* Sayfanın kenar boşluklarını sıfırlar */
+            padding: 0;
+            height: 100vh; /* Yüksekliği tam ekran yapar */
+        }
+
+
+        .navbar-brand img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/arkaplan.jpg') no-repeat center center;
+            background-size: cover;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+
+
+        /* Yazının daha iyi görünmesi için arka planı koyulaştırma */
+            .hero-section h1,
+            .hero-section p {
+            background-color: rgba(0, 0, 0, 0.5); /* Koyu bir zemin ekleme */
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .hero-section h1 {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+
+        .features-section {
+            background-color: rgba(255, 255, 255, 0.4); /* Beyaz renk ve %70 saydamlık */
+            color: Black; /* Yazı rengini beyaz yapar */
+            padding: 50px 20px;
+        }
+
+            .features-section .card {
+                background-color: #495057; /* Kartların daha açık bir koyu rengi */
+                color: white; /* Kart içindeki yazıların rengini beyaz yapar */
+                border: none; /* Kart kenarlarını kaldırır */
+            }
+
+                .features-section .card h5 {
+                    font-weight: bold;
+                }
+
+                .features-section .card:hover {
+                    transform: translateY(-5px);
+                    background-color: #6c757d; /* Hover sırasında daha açık bir renk */
+                }
+
+
+        .custom-btn {
+            background-color: rgba(0, 0, 0, 0.5); /* Yarı saydam siyah arka plan */
+            color: white !important; /* Yazı rengini beyaz yapar */
+            border: 1px solid rgba(255, 255, 255, 0.6); /* Saydam beyaz çerçeve */
+            padding: 10px 20px; /* Butonun iç boşluğu */
+            border-radius: 5px; /* Kenarları yuvarlama */
+        }
+
+            .custom-btn:hover {
+                background-color: rgba(0, 0, 0, 0.8); /* Hover durumunda koyu arka plan */
+                color: white; /* Hover sırasında yazı rengini beyaz tut */
+            }
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+            .footer a {
+                color: #ffc107;
+                text-decoration: none;
+            }
+
+        
+
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <h1>En İyi Berber Hizmetleri Burada!</h1>
+        <p>Berberinizi seçin, çalışanınızla tanışın ve profesyonel hizmetin keyfini çıkarın.</p>
+        <!-- Hemen Randevu Al Butonu -->
+        <a href="/Randevu/Create" class="btn btn-outline-light btn-lg m-2 custom-btn">Hemen Randevu Al</a>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container text-center">
+            <h2>Bizimle Neler Yapabilirsiniz?</h2>
+            <div class="row mt-4">
+                <div class="col-md-3">
+                    <div class="card p-3">
+                        <h5>Berber Tanımlamaları</h5>
+                        <p>berberleri inceleyin ve size en uygun olanını bulun.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card p-3">
+                        <h5>Çalışan Yönetimi</h5>
+                        <p>Uzman çalışanlardan hizmet alın.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card p-3">
+                        <h5>Randevu Sistemi</h5>
+                        <p>Kolayca randevu oluşturun ve detayları görün.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card p-3">
+                        <h5>AI Destekli Saç Önerileri</h5>
+                        <p>Fotoğrafınızı yükleyin, tarzınızı yapay zeka ile değiştirin.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Berber Smart. Tüm hakları saklıdır.</p>
+        <p>
+            <a href="#">Kullanım Koşulları</a> |
+            <a href="#">Gizlilik Politikası</a>
+        </p>
+    </footer>
+
+    <!-- Bootstrap 5 JS ve Popper.js (CDN üzerinden) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

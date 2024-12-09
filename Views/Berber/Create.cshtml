@@ -1,0 +1,25 @@
+﻿@model BerberYonetimSistemi.Models.Berber
+
+@{
+    ViewData["Title"] = "Berber Ekle";
+}
+
+<h2>Berber Ekle</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label>Berber Adı</label>
+        <input type="text" name="BerberAdi" class="form-control" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Berber Ekle</button>
+</form>
+
+
+@foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+{
+    <p style="color: red;">@error.ErrorMessage</p>
+}
+
+
+
