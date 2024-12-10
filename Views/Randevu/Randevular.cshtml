@@ -1,30 +1,36 @@
 ﻿@model IEnumerable<BerberYonetimSistemi.Models.Randevu>
-
-<h2>Randevular</h2>
-
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["SuccessMessage"]
-    </div>
+@{
+    ViewData["Title"] = "Randevularım";
 }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Berber</th>
-            <th>Çalışan</th>
-            <th>Tarih</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var randevu in Model)
-        {
+<h2>Randevularım</h2>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-info">
+        <strong>@ViewBag.Message</strong>
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>@randevu.Berber?.BerberAdi</td>
-                <td>@randevu.Calisan?.CalisanAdi</td>
-                <td>@randevu.RandevuTarih.ToString("yyyy-MM-dd HH:mm")</td>
+                <th>Berber Adı</th>
+                <th>Çalışan Adı</th>
+                <th>Randevu Tarihi</th>
+                <th>Hizmet</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var randevu in Model)
+            {
+                <tr>
+                    <td>@randevu.Berber.BerberAdi</td>
+                    <td>@randevu.Calisan.CalisanAdi</td>
+                    <td>@randevu.RandevuTarih.ToString("dd/MM/yyyy HH:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

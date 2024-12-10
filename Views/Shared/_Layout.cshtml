@@ -100,12 +100,13 @@
                 font-size: 1.2rem;
                 margin-top: 20px;
             }
-
-        
-
-     
+ 
     </style>
 </head>
+@{
+    var isLoggedIn = ViewBag.IsLoggedIn as bool?;
+    var randevular = ViewBag.Randevular as List<BerberYonetimSistemi.Models.Randevu>;
+}
 <body>
 
     <!-- Üst Navbar -->
@@ -124,6 +125,7 @@
 
                 <!-- Menü Linkleri -->
                 <div class="collapse navbar-collapse" id="mainNavbar">
+
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Anasayfa</a>
@@ -131,19 +133,27 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Hakkımızda</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Randevu/Randevular">Randevularım</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Berber/Index">Berber Yönetimi</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Calisan/Index">Çalışan Yönetimi</a>
-                        </li>
-                        @if (ViewData["IsAdmin"]?.ToString() == "true")
+                        <div>
+                            @if (isLoggedIn == true)
+                            {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Randevu/Randevular">Randevularım</a>
+                            </li>
+                               
+                            }
+                            else
+                            {
+                                
+                            }
+                        </div>
+                        @if (ViewBag.IsAdmin == "true")
                         {
-                            <a href="@Url.Action("ManageBarbers", "Admin")">Berber Yönetimi</a>
-                            <a href="@Url.Action("ManageUsers", "Admin")">Kullanıcı Yönetimi</a>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Berber/Index">Berber Yönetimi</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Calisan/Index">Çalışan Yönetimi</a>
+                            </li>
                         }
 
 

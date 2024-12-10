@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BerberYonetimSistemi.Controllers
 {
-    public class BerberController : Controller
+    public class BerberController : BaseController
     {
         private readonly BerberDbContext _context;
 
@@ -16,13 +16,28 @@ namespace BerberYonetimSistemi.Controllers
 
         public IActionResult Index()
         {
+            var isAdmin = HttpContext.Session.GetString("IsAdmin");
+
+            if (isAdmin == "true")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var berberler = _context.Berberler.ToList();
+
             return View(berberler);
         }
 
         public IActionResult Create()
         {
+            var isAdmin = HttpContext.Session.GetString("IsAdmin");
+
+            if (isAdmin == "true")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Berberler = new SelectList(_context.Berberler, "BerberId", "BerberAdi");
+            
             return View();
         }
 

@@ -1,4 +1,76 @@
-﻿using System;
+﻿/* 
+
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using BerberYonetimSistemi.Data;
+using BerberYonetimSistemi.Models;
+
+namespace BerberYonetimSistemi.Controllers
+{
+    public class AdminController : BaseController
+    {
+        private readonly BerberDbContext _context;
+
+        public AdminController(BerberDbContext context)
+        {
+            _context = context;
+        }
+
+        public IActionResult Index()
+        {
+            ViewBag.IsAdmin = HttpContext.Session.GetString("IsAdmin");
+            return View();
+        }
+
+
+        public IActionResult Dashboard()
+        {
+            var isAdmin = HttpContext.Session.GetString("IsAdmin");
+
+            if (isAdmin == "true")
+            {
+                return RedirectToAction("Login");
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(Admin model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _context.Admin.FirstOrDefaultAsync(u => u.AdminKullaniciAdi == model.AdminKullaniciAdi && u.AdminSifre == model.AdminSifre);
+
+                if (user != null)
+                {
+                    HttpContext.Session.SetString("IsAdmin", user.IsAdmin ? "true" : "false");
+                    return RedirectToAction("Index", "Home");
+                }
+                ModelState.AddModelError(string.Empty, "Geçersiz kullanıcı adı veya şifre.");
+            }
+            return View(model);
+        }
+
+        // POST: Admin/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("AdminId,AdminAdi,AdminSoyadi,AdminTelefon")] Admin admin)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(admin);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(admin);
+        }
+    }
+}
+
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,67 +95,37 @@ namespace BerberYonetimSistemi.Controllers
         }
 
         // GET: Admin
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            // Admin kontrolü yap
-            var isAdmin = HttpContext.Session.GetString("IsAdmin");
-
-            // Adminse admin sayfasına yönlendir
-            if (isAdmin == "true")
-            {
-                return RedirectToAction("Home", "Admin"); // Admin Dashboard'a yönlendirme
-            }
-
-            // Eğer admin değilse ana sayfaya dön
-            return View(await _context.Admin.ToListAsync());
+            ViewBag.IsAdmin = HttpContext.Session.GetString("IsAdmin");
+            return View();
         }
-
-
-        [HttpPost]
-        public async Task<IActionResult> Login(Admin model)
-        {
-            if (ModelState.IsValid)
-            {
-                // Kullanıcıyı veritabanında kontrol et
-                var user = await _context.Admin.FirstOrDefaultAsync(u => u.AdminKullaniciAdi == model.AdminKullaniciAdi && u.AdminSifre == model.AdminSifre);
-
-                if (user != null)
-                {
-                    // Admin olup olmadığını kontrol et (Eğer IsAdmin bir property ise)
-                    if (user.IsAdmin) // Eğer IsAdmin bir property ise parantez kullanmayın
-                    {
-                        HttpContext.Session.SetString("IsAdmin", "true");
-                        return RedirectToAction("Index", "Home");
-                    }
-                    else
-                    {
-                        HttpContext.Session.SetString("IsAdmin", "false");
-                        return RedirectToAction("Index", "Home");
-                    }
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Geçersiz kullanıcı adı veya şifre.");
-                }
-            }
-            return View(model);
-        }
-
 
 
         public IActionResult Dashboard()
         {
-            // Sadece adminler erişebilir
-            if (HttpContext.Session.GetString("IsAdmin") == "true")
+            var isAdmin = HttpContext.Session.GetString("IsAdmin");
+
+            if (isAdmin == "true")
             {
-                return View(); // Admin panelini göster
+                return RedirectToAction("Login");
             }
-            else
-            {
-                return RedirectToAction("Login"); // Giriş yap sayfasına yönlendir
-            }
+            return View();
         }
-        
+
+        [HttpPost]
+        public IActionResult Login(string kullaniciAdi, string sifre)
+        {
+            // Kullanıcı doğrulama işlemi
+            if (kullaniciAdi == "b221210086" && sifre == "1234") // Örnek kullanıcı
+            {
+                HttpContext.Session.SetString("KullaniciAdi", kullaniciAdi);
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.Hata = "Geçersiz kullanıcı adı veya şifre.";
+            return View();
+        }
 
         // GET: Admin/Details/5
         public async Task<IActionResult> Details(int id)
@@ -208,14 +250,14 @@ namespace BerberYonetimSistemi.Controllers
             {
                 _context.Admin.Remove(admin);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool AdminExists(int id)
         {
-          return (_context.Admin?.Any(e => e.AdminId == id)).GetValueOrDefault();
+            return (_context.Admin?.Any(e => e.AdminId == id)).GetValueOrDefault();
         }
     }
 }

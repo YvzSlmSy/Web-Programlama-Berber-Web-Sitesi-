@@ -14,6 +14,34 @@ namespace BerberYonetimSistemi.Controllers
         {
             _context = context;
         }
+        public IActionResult Index()
+        {
+            var kullaniciAdi = HttpContext.Session.GetString("KullaniciAdi");
+
+            if (string.IsNullOrEmpty(kullaniciAdi))
+            {
+                ViewBag.IsLoggedIn = false;
+                ViewBag.Randevular = null;
+            }
+            else
+            {
+                ViewBag.IsLoggedIn = true;
+                ViewBag.KullaniciAdi = kullaniciAdi;
+
+                // Kullanıcı bilgisi alınıyor
+                var kullanici = _context.Kullanicilar
+                    .FirstOrDefault(k => k.KullaniciAdi == kullaniciAdi);
+
+                // Kullanıcıya ait randevuları al
+                var randevular = _context.Randevular
+                    .Where(r => r.KullaniciId == kullanici.KullaniciId)
+                    .ToList();
+
+                ViewBag.Randevular = randevular;
+            }
+
+            return View();
+        }
 
         [HttpGet]
         public JsonResult Calisanlar(int berberId)
@@ -55,12 +83,49 @@ namespace BerberYonetimSistemi.Controllers
 
         public IActionResult Randevular()
         {
-            var randevular = _context.Randevular
-                                     .Include(r => r.Berber)
-                                     .Include(r => r.Calisan)
-                                     .ToList();
-            return View(randevular);
+            // Kullanıcının giriş yaptığı e-posta ya da kullanıcı adı bilgisi
+            var kullaniciAdi = User.Identity.Name;
+
+            if (string.IsNullOrEmpty(kullaniciAdi))
+            {
+                // Eğer kullanıcı giriş yapmamışsa hata sayfası veya login sayfasına yönlendirme yapılabilir
+                return RedirectToAction("Index", "Home");
+            }
+
+            // Kullanıcı bilgilerini alıyoruz (örneğin, e-posta ile kullanıcıyı buluyoruz)
+            var kullanici = _context.Kullanicilar.FirstOrDefault(k => k.KullaniciAdi == kullaniciAdi);
+
+            if (kullanici != null)
+            {
+                var kullaniciId = kullanici.KullaniciId; // Kullanıcı ID'sini alıyoruz
+
+                // Kullanıcıya ait randevuları veritabanından alıyoruz
+                var randevular = _context.Randevular
+                                         .Where(r => r.KullaniciId == kullaniciId)
+                                         .Include(r => r.Calisan)  // Çalışan bilgilerini de dahil ediyoruz
+                                         .Include(r => r.Berber)   // Berber bilgilerini de dahil ediyoruz
+                                         .ToList();
+
+                if (randevular.Count == 0)
+                {
+                    // Eğer kullanıcıya ait randevu yoksa, uygun bir mesaj gösterebiliriz
+                    ViewBag.Message = "Henüz randevunuz yok.";
+                }
+
+                // Randevular listesini View'a gönderiyoruz
+                return View(randevular);
+            }
+            else
+            {
+                // Kullanıcı bulunamazsa hata sayfasına yönlendiriyoruz
+                return View("Error");
+            }
         }
+
+
+
+
+
 
         [HttpGet]
         public IActionResult Create()
@@ -92,5 +157,19 @@ namespace BerberYonetimSistemi.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+        public IActionResult Edit(int id)
+        {
+            var randevu = _context.Randevular
+                .Include(r => r.Kullanici) // Kullanici bilgilerini dahil edin
+                .FirstOrDefault(r => r.RandevuId == id);
+
+            if (randevu == null)
+            {
+                return NotFound();
+            }
+
+            return View(randevu);
+        }
+
     }
 }

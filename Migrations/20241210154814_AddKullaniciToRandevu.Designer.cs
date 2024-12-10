@@ -3,6 +3,7 @@ using System;
 using BerberYonetimSistemi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BerberYonetimSistemi.Migrations
 {
     [DbContext(typeof(BerberDbContext))]
-    partial class BerberDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241210154814_AddKullaniciToRandevu")]
+    partial class AddKullaniciToRandevu
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

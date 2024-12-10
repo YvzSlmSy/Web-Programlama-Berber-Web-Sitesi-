@@ -1,20 +1,36 @@
-﻿using BerberYonetimSistemi.Models;
+﻿using BerberYonetimSistemi.Data;
+using BerberYonetimSistemi.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace BerberYonetimSistemi.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+       private readonly BerberDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(BerberDbContext context)
         {
-            _logger = logger;
+            _context = context;
         }
-
         public IActionResult Index()
         {
+            // Oturum kontrolü
+            var kullaniciAdi = HttpContext.Session.GetString("KullaniciAdi");
+
+            if (string.IsNullOrEmpty(kullaniciAdi))
+            {
+                ViewBag.IsLoggedIn = false; // Giriş yapılmadı
+                ViewBag.Randevular = null;
+            }
+            else
+            {
+                ViewBag.IsLoggedIn = true; // Giriş yapıldı
+                ViewBag.KullaniciAdi = kullaniciAdi;
+
+            }
+
             return View();
         }
 
