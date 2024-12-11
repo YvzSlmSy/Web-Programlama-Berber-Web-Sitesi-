@@ -3,7 +3,7 @@
 
 namespace BerberYonetimSistemi.Models
 {
-    public class Kullanici : IdentityUser
+    public class Kullanici : IdentityUser<int>
     {
         public int KullaniciId { get; set; }
         public string KullaniciAdi { get; set; }

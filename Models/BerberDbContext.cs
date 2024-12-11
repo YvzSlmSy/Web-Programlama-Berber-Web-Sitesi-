@@ -1,9 +1,12 @@
 ﻿using BerberYonetimSistemi.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace BerberYonetimSistemi.Data
 {
-    public class BerberDbContext : DbContext
+    public class BerberDbContext : IdentityDbContext<Kullanici, Role, int>  // Role'u int olarak tanımladık
     {
         public BerberDbContext(DbContextOptions<BerberDbContext> options) : base(options)
         {
@@ -15,6 +18,7 @@ namespace BerberYonetimSistemi.Data
         public DbSet<Berber> Berberler { get; set; }
         public DbSet<Calisan> Calisanlar { get; set; }
         public DbSet<Kullanici> Kullanicilar { get; set; } // Kullanıcılar için tablo
+        public DbSet<BerberYonetimSistemi.Models.Admin>? Admin { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,8 +29,14 @@ namespace BerberYonetimSistemi.Data
                 .HasForeignKey(c => c.BerberId);
 
             base.OnModelCreating(modelBuilder);
+            // Kullanici ve Calisan arasındaki ilişkiyi tanımlama
+            modelBuilder.Entity<Calisan>()
+                .HasOne(c => c.Kullanici)
+                .WithMany(k => k.Calisanlar)
+                .HasForeignKey(c => c.KullaniciId)
+                .OnDelete(DeleteBehavior.Cascade); // İsteğe bağlı olarak silme davranışı
         }
-
-        public DbSet<BerberYonetimSistemi.Models.Admin>? Admin { get; set; }
     }
+
 }
+

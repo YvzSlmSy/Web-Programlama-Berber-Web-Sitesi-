@@ -109,45 +109,32 @@ namespace BerberYonetimSistemi.Controllers
         // Giriş işlemi
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(Kullanici model)
+        public async Task<IActionResult> Login(string KullaniciAdi, string KullaniciSifre)
         {
             if (ModelState.IsValid)
             {
-                // Kullanıcıyı kullanıcı adı ile buluyoruz
-                var user = await _userManager.FindByNameAsync(model.KullaniciAdi);
+                var user = await _userManager.FindByNameAsync(KullaniciAdi);
                 if (user != null)
                 {
-                    // Kullanıcıyı şifre ile doğruluyoruz
-                    var result = await _signInManager.PasswordSignInAsync(user, model.KullaniciSifre, model.RememberMe, false);
-
+                    var result = await _signInManager.PasswordSignInAsync(user, KullaniciSifre, false, false);
                     if (result.Succeeded)
                     {
-                        // Başarılı giriş yaptıktan sonra Claim ekliyoruz
-                        var claims = new List<Claim>
-                        {
-                            new Claim(ClaimTypes.Name, model.KullaniciAdi), // Kullanıcı adı bilgisi
-                            // Diğer claim'leri burada ekleyebilirsiniz (örneğin, rol bilgisi)
-                        };
-
-                        var identity = new ClaimsIdentity(claims, "login");
-                        var principal = new ClaimsPrincipal(identity);
-
-                        // Cookie Authentication ile oturum açıyoruz
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
-                        // Kullanıcıyı yönlendiriyoruz
                         return RedirectToAction("Index", "Home");
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, "Geçersiz kullanıcı adı veya şifre.");
+                        ModelState.AddModelError(string.Empty, "Kullanıcı adı veya şifre hatalı.");
                     }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Kullanıcı bulunamadı.");
                 }
             }
 
-            ViewBag.ErrorMessage = "Kullanıcı adı veya şifre hatalı.";
             return View();
         }
+
 
         // Kayıt olma sayfası
         [HttpGet]

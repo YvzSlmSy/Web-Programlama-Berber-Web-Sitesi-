@@ -81,46 +81,27 @@ namespace BerberYonetimSistemi.Controllers
             return View(randevu);
         }
 
-        public IActionResult Randevular()
+        public IActionResult Randevularim()
         {
-            // Kullanıcının giriş yaptığı e-posta ya da kullanıcı adı bilgisi
             var kullaniciAdi = User.Identity.Name;
 
             if (string.IsNullOrEmpty(kullaniciAdi))
             {
-                // Eğer kullanıcı giriş yapmamışsa hata sayfası veya login sayfasına yönlendirme yapılabilir
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Kullanici");
             }
 
-            // Kullanıcı bilgilerini alıyoruz (örneğin, e-posta ile kullanıcıyı buluyoruz)
-            var kullanici = _context.Kullanicilar.FirstOrDefault(k => k.KullaniciAdi == kullaniciAdi);
+            var kullanici = _context.Kullanicilar
+                .Include(k => k.Randevular)
+                .FirstOrDefault(k => k.KullaniciAdi == kullaniciAdi);
 
-            if (kullanici != null)
+            if (kullanici == null)
             {
-                var kullaniciId = kullanici.KullaniciId; // Kullanıcı ID'sini alıyoruz
-
-                // Kullanıcıya ait randevuları veritabanından alıyoruz
-                var randevular = _context.Randevular
-                                         .Where(r => r.KullaniciId == kullaniciId)
-                                         .Include(r => r.Calisan)  // Çalışan bilgilerini de dahil ediyoruz
-                                         .Include(r => r.Berber)   // Berber bilgilerini de dahil ediyoruz
-                                         .ToList();
-
-                if (randevular.Count == 0)
-                {
-                    // Eğer kullanıcıya ait randevu yoksa, uygun bir mesaj gösterebiliriz
-                    ViewBag.Message = "Henüz randevunuz yok.";
-                }
-
-                // Randevular listesini View'a gönderiyoruz
-                return View(randevular);
+                return RedirectToAction("Login", "Kullanici");
             }
-            else
-            {
-                // Kullanıcı bulunamazsa hata sayfasına yönlendiriyoruz
-                return View("Error");
-            }
+
+            return View(kullanici.Randevular);
         }
+
 
 
 
